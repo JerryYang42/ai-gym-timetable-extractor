@@ -1,0 +1,65 @@
+[
+  {
+    "date": "Jan 19",
+    "day_of_week": "Mon",
+    "timeslot": "07:00",
+    "activity": "Vir BodyBalance",
+    "venue": "Studio 1",
+    "class_type": "Group Exercise - Virtual",
+    "vacancy": "30 spaces"
+  },
+  {
+    "date": "Jan 19",
+    "day_of_week": "Mon",
+    "timeslot": "10:35",
+    "activity": "Vir BodyCombat",
+    "venue": "Studio 1",
+    "class_type": "Group Exercise - Virtual",
+    "vacancy": "30 spaces"
+  },
+  {
+    "date": "Jan 19",
+    "day_of_week": "Mon",
+    "timeslot": "12:00",
+    "activity": "Vir H Aqua",
+    "venue": "Training Pool Lane 3b, Training Pool La...",
+    "class_type": "Group Exercise - Virtual",
+    "vacancy": "13 spaces"
+  },
+  {
+    "date": "Jan 19",
+    "day_of_week": "Mon",
+    "timeslot": "12:15",
+    "activity": "Core Fitness",
+    "venue": "Studio 1",
+    "class_type": "Group Exercise 16+ Yrs",
+    "vacancy": "14 spaces"
+  },
+  {
+    "date": "Jan 19",
+    "day_of_week": "Mon",
+    "timeslot": "18:15",
+    "activity": "Vir R P M",
+    "venue": "Group Cycling Studio",
+    "class_type": "Group Exercise - Virtual",
+    "vacancy": "22 spaces"
+  },
+  {
+    "date": "Jan 19",
+    "day_of_week": "Mon",
+    "timeslot": "19:00",
+    "activity": "Zumba",
+    "venue": "Studio 1",
+    "class_type": "Group Exercise 16+ Yrs",
+    "vacancy": "12 spaces"
+  },
+  {
+    "date": "Jan 19",
+    "day_of_week": "Mon",
+    "timeslot": "20:00",
+    "activity": "Yoga",
+    "venue": "Studio 1",
+    "class_type": "Group Exercise 16+ Yrs",
+    "vacancy": "21 spaces"
+  }
+]
