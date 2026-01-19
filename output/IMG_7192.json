@@ -1,0 +1,56 @@
+[
+  {
+    "date": "20",
+    "day_of_week": "Tue",
+    "timeslot": "10:30",
+    "activity": "Aqua Aerobics",
+    "venue": "Training Pool Lane 1b",
+    "class_type": "Group Exercise 16+ Yrs",
+    "vacancy": "37 spaces"
+  },
+  {
+    "date": "20",
+    "day_of_week": "Tue",
+    "timeslot": "11:15",
+    "activity": "E A - Buggies",
+    "venue": "Studio 1",
+    "class_type": "Group Exercise 16+ Yrs",
+    "vacancy": "4 spaces"
+  },
+  {
+    "date": "20",
+    "day_of_week": "Tue",
+    "timeslot": "12:15",
+    "activity": "Pilates",
+    "venue": "Studio 1",
+    "class_type": "Group Exercise 16+ Yrs",
+    "vacancy": "21 spaces"
+  },
+  {
+    "date": "20",
+    "day_of_week": "Tue",
+    "timeslot": "18:15",
+    "activity": "Group Cycle",
+    "venue": "Group Cycling Studio",
+    "class_type": "Group Exercise 16+ Yrs",
+    "vacancy": "22 spaces"
+  },
+  {
+    "date": "20",
+    "day_of_week": "Tue",
+    "timeslot": "20:00",
+    "activity": "Vir BodyBalance",
+    "venue": "Studio 1",
+    "class_type": "Group Exercise - Virtual",
+    "vacancy": "29 spaces"
+  },
+  {
+    "date": "20",
+    "day_of_week": "Tue",
+    "timeslot": "20:30",
+    "activity": "Vir H Aqua",
+    "venue": "Training Pool Lane 5b",
+    "class_type": "Group Exercise - Virtual",
+    "vacancy": "39 spaces"
+  }
+]
