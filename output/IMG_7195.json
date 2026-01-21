@@ -1,0 +1,74 @@
+[
+  {
+    "date": "23",
+    "day_of_week": "Fri",
+    "timeslot": "09:15",
+    "activity": "Vir H Aqua",
+    "venue": "Training Pool Lane 3b, Training Pool La...",
+    "class_type": "Group Exercise - Virtual",
+    "vacancy": "20 spaces"
+  },
+  {
+    "date": "23",
+    "day_of_week": "Fri",
+    "timeslot": "10:00",
+    "activity": "Gp Ref Gym",
+    "venue": "Gp Referrals",
+    "class_type": "G P Referral Sessions",
+    "vacancy": "9 spaces"
+  },
+  {
+    "date": "23",
+    "day_of_week": "Fri",
+    "timeslot": "10:45",
+    "activity": "Gp Ref Gym",
+    "venue": "Gp Referrals",
+    "class_type": "G P Referral Sessions",
+    "vacancy": "8 spaces"
+  },
+  {
+    "date": "23",
+    "day_of_week": "Fri",
+    "timeslot": "11:00",
+    "activity": "Yoga",
+    "venue": "Studio 1",
+    "class_type": "Group Exercise 16+ Yrs",
+    "vacancy": "28 spaces"
+  },
+  {
+    "date": "23",
+    "day_of_week": "Fri",
+    "timeslot": "12:15",
+    "activity": "Aqua Aerobics",
+    "venue": "Training Pool Lane 1b, Training Pool La...",
+    "class_type": "Group Exercise 16+ Yrs",
+    "vacancy": "33 spaces"
+  },
+  {
+    "date": "23",
+    "day_of_week": "Fri",
+    "timeslot": "12:15",
+    "activity": "Circuits",
+    "venue": "Studio 1",
+    "class_type": "Group Exercise 16+ Yrs",
+    "vacancy": "14 spaces"
+  },
+  {
+    "date": "23",
+    "day_of_week": "Fri",
+    "timeslot": "18:30",
+    "activity": "Vir R P M",
+    "venue": "Group Cycling Studio",
+    "class_type": "Group Exercise - Virtual",
+    "vacancy": "24 spaces"
+  },
+  {
+    "date": "23",
+    "day_of_week": "Fri",
+    "timeslot": "19:05",
+    "activity": "Yoga",
+    "venue": "Studio 1",
+    "class_type": "Group Exercise 16+ Yrs",
+    "vacancy": "27 spaces"
+  }
+]

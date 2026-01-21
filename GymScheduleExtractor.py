@@ -49,6 +49,14 @@ class GymScheduleExtractor:
 
 if __name__ == "__main__":
     extractor = GymScheduleExtractor()
-    json_result = extractor.extract("data/IMG_7193.PNG")
-    print(json_result)
-    extractor.save_to_file(json_result, "output/IMG_7193.json")
+    filenames = ["IMG_7195", "IMG_7196", "IMG_7197"]
+    for name in filenames:
+        input_path = f"data/{name}.PNG"
+        output_path = f"output/{name}.json"
+        json_result = extractor.extract(input_path)
+        extractor.save_to_file(json_result, output_path)
+    
+
+    # json_result = extractor.extract("data/IMG_7194.PNG")
+    # print(json_result)
+    # extractor.save_to_file(json_result, "output/IMG_7194.json")

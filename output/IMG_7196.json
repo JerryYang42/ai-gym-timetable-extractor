@@ -1,0 +1,20 @@
+[
+  {
+    "date": "24",
+    "day_of_week": "Sat",
+    "timeslot": "10:00",
+    "activity": "Group Cycle Sat 10:00",
+    "venue": "Group Cycling Studio",
+    "class_type": "Group Exercise 16+ Yrs",
+    "vacancy": "23 spaces"
+  },
+  {
+    "date": "24",
+    "day_of_week": "Sat",
+    "timeslot": "20:00",
+    "activity": "Vir Womens Aqua Sat 20:00",
+    "venue": "Training Pool Lane 1b, Training Pool La...",
+    "class_type": "Group Exercise - Virtual",
+    "vacancy": "40 spaces"
+  }
+]

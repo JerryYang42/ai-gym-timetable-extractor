@@ -1,0 +1,29 @@
+[
+  {
+    "date": "Jan 25",
+    "day_of_week": "Sun",
+    "timeslot": "09:00",
+    "activity": "Vir R P M",
+    "venue": "Group Cycling Studio",
+    "class_type": "Group Exercise - Virtual",
+    "vacancy": "24"
+  },
+  {
+    "date": "Jan 25",
+    "day_of_week": "Sun",
+    "timeslot": "10:00",
+    "activity": "Vir R P M",
+    "venue": "Group Cycling Studio",
+    "class_type": "Group Exercise - Virtual",
+    "vacancy": "24"
+  },
+  {
+    "date": "Jan 25",
+    "day_of_week": "Sun",
+    "timeslot": "20:00",
+    "activity": "Vir H Aqua",
+    "venue": "Training Pool Lane 1b, Training Pool La...",
+    "class_type": "Group Exercise - Virtual",
+    "vacancy": "40"
+  }
+]
