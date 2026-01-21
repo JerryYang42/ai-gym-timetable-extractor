@@ -84,15 +84,17 @@ class GymScheduleDatabase:
 
 
 class GymScheduleExtractor:
-    def __init__(self, model_name="gemini-2.0-flash"):
+    def __init__(self, model_name="gemini-2.0-flash", api_key=None):
         dotenv.load_dotenv()
-        self.api_key = os.environ.get("GEMINI_API_KEY")
+        self.api_key = api_key or os.environ.get("GEMINI_API_KEY")
         if not self.api_key:
-            raise ValueError("GEMINI_API_KEY environment variable not set")
-        
-        # Initialize client cleanly without passing unsupported http_options
-        self.client = genai.Client(api_key=self.api_key)
-        self.model_name = model_name
+            # Don't raise error immediately - allow using database without API
+            self.client = None
+            self.model_name = model_name
+        else:
+            # Initialize client cleanly without passing unsupported http_options
+            self.client = genai.Client(api_key=self.api_key)
+            self.model_name = model_name
         
         # Initialize in-memory database
         self.database = GymScheduleDatabase()
@@ -102,6 +104,9 @@ class GymScheduleExtractor:
         Uploads image and extracts schedule details using structured output.
         Returns a validated GymSchedule object.
         """
+        if not self.client:
+            raise ValueError("GEMINI_API_KEY is required for extraction. Please set it in .env or pass it to the constructor.")
+        
         print(f"Uploading {image_path}...")
         my_file = self.client.files.upload(file=image_path)
 
