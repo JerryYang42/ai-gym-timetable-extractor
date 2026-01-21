@@ -1,1 +1,32 @@
+# python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+*.manifest
+*.spec
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# IDEs and editors
+.vscode/
+.idea/
+.DS_Store
+
+# env files
 .env
+.env.*
+!.env.example

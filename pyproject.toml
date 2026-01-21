@@ -12,4 +12,15 @@ dependencies = [
 ]
 
 [tool.setuptools]
-py-modules = ["GymScheduleExtractor"]
+py-modules = ["GymScheduleExtractor", "OcrEngine", "Constants"]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "ruff",
+    "mypy"
+]
+test = [
+    "pytest",
+    "pytest-cov"
+]
