@@ -32,6 +32,12 @@ class GymScheduleExtractor:
         )
             
         return self.clean_up_json_markdown(response.text)
+
+    def save_to_file(self, content, output_path):
+        """Saves content to a file."""
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(content)
+        print(f"Saved extracted JSON to {output_path}")
     
     def clean_up_json_markdown(self, text):
         """Cleans up markdown code blocks from JSON text."""
@@ -43,4 +49,6 @@ class GymScheduleExtractor:
 
 if __name__ == "__main__":
     extractor = GymScheduleExtractor()
-    print(extractor.extract("data/IMG_7192.PNG"))
+    json_result = extractor.extract("data/IMG_7193.PNG")
+    print(json_result)
+    extractor.save_to_file(json_result, "output/IMG_7193.json")
