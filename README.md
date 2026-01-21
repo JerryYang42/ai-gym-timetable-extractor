@@ -7,22 +7,20 @@ This is a project that uses AI to extract course timetable from screenshots and 
 ```
 ai-gym-timetable-extractor/
 ├── src/
-│   ├── main/
-│   │   ├── python/
-│   │   │   └── ai_gym_timetable_extractor/
-│   │   │       ├── __init__.py
-│   │   │       ├── cli.py           # Command-line interface
-│   │   │       ├── constants.py     # Configuration constants
-│   │   │       ├── extractor.py     # Main extractor logic
-│   │   │       └── ocr_engine.py    # OCR engine implementations
-│   │   └── resources/
-│   └── test/
-│       ├── python/
-│       └── resources/
-├── data/                            # Input images
-├── output/                          # Extracted JSON outputs
-├── .env                            # Environment variables (not in git)
-├── pyproject.toml                  # Project configuration
+│   └── ai_gym_timetable_extractor/
+│       ├── __init__.py
+│       ├── cli.py           # Command-line interface
+│       ├── constants.py     # Configuration constants
+│       ├── extractor.py     # Main extractor logic
+│       └── ocr_engine.py    # OCR engine implementations
+├── tests/
+│   ├── __init__.py
+│   └── fixtures/            # Test data (committed to git)
+├── data/                    # Development data (gitignored)
+├── output/                  # Extracted JSON outputs (gitignored)
+├── .env                     # Environment variables (not in git)
+├── pyproject.toml           # Project configuration
+├── run.sh                   # Convenience script
 └── README.md
 ```
 
@@ -41,22 +39,31 @@ ai-gym-timetable-extractor/
 
 ## Usage
 
+### Using the run script (easiest)
+
+```bash
+./run.sh
+```
+
 ### Direct Execution
 
 ```bash
-python3 src/main/python/ai_gym_timetable_extractor/cli.py
+python3 src/ai_gym_timetable_extractor/cli.py
 ```
 
 ### As a Module
 
 ```bash
-export PYTHONPATH="${PYTHONPATH}:$(pwd)/src/main/python"
+export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
 python3 -m ai_gym_timetable_extractor.cli
 ```
 
 ### In Python Code
 
 ```python
+import sys
+sys.path.insert(0, 'src')
+
 from ai_gym_timetable_extractor import GymScheduleExtractor, GeminiOcrEngine
 
 # Initialize the extractor
@@ -84,5 +91,5 @@ ruff format .
 
 Type checking:
 ```bash
-mypy src/main/python/ai_gym_timetable_extractor
+mypy src/ai_gym_timetable_extractor
 ```
