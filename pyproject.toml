@@ -12,4 +12,4 @@ dependencies = [
 ]
 
 [tool.setuptools]
-py-modules = ["GymScheduleExtractor", "main"]
+py-modules = ["GymScheduleExtractor", "example_usage"]
