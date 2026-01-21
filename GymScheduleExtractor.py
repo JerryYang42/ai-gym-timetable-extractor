@@ -87,14 +87,14 @@ class GymScheduleExtractor:
     def __init__(self, model_name="gemini-2.0-flash", api_key=None):
         dotenv.load_dotenv()
         self.api_key = api_key or os.environ.get("GEMINI_API_KEY")
+        self.model_name = model_name
+        
         if not self.api_key:
             # Don't raise error immediately - allow using database without API
             self.client = None
-            self.model_name = model_name
         else:
             # Initialize client cleanly without passing unsupported http_options
             self.client = genai.Client(api_key=self.api_key)
-            self.model_name = model_name
         
         # Initialize in-memory database
         self.database = GymScheduleDatabase()
