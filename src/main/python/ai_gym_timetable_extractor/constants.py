@@ -1,0 +1,4 @@
+"""Constants used throughout the application."""
+
+ENV_GEMINI_API_KEY = "GEMINI_API_KEY"
+ENV_GEMINI_MODEL_NAME = "GEMINI_MODEL_NAME"
