@@ -30,3 +30,9 @@ env/
 .env
 .env.*
 !.env.example
+
+# data folders
+data/
+logs/
+temp/
+output/
