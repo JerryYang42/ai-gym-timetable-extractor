@@ -27,7 +27,7 @@ def main():
     filenames = ["IMG_7191"]
     for name in filenames:
         input_path = f"data/{name}.PNG"
-        output_path = f"output2/{name}.json"
+        output_path = f"temp/{name}.json"
         
         if not os.path.exists(input_path):
             print(f"Warning: {input_path} not found, skipping...")

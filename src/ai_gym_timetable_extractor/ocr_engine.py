@@ -2,6 +2,9 @@
 
 import os
 import certifi
+import datetime
+
+from .models import GymSchedule
 
 # IMPORTANT: Set SSL environment variables before importing google.genai
 # This forces the library to use the certifi bundle for SSL verification
@@ -39,10 +42,21 @@ class GeminiOcrEngine(OcrEngine):
         """Extract gym timetable from image using Gemini API."""
         my_file = self.client.files.upload(file=image_path)
 
-        print("Generating content...")
+        print("Sending OCR request to Gemini API...")
+        today = datetime.date.today().isoformat()
         response = self.client.models.generate_content(
             model=self.model_name,
-            contents=[my_file, "This is a screenshot of my gym timetable. Extract out the schedule details in json, including date, day of week, timeslot, activity, venue, class type, vacancy."],
+            contents=[
+                my_file, 
+                "This is a screenshot of my gym timetable. Extract out "  +
+                "the schedule details, including date, day of week, "     + 
+                "timeslot, activity, venue, class type, and vacancy for " +
+                f"each class. Date should be in a near future of {today} " +
+                "and formatted as 'YYYY-MM-DD'."],
+                config={
+                    "response_mime_type": "application/json",
+                    "response_schema": GymSchedule,
+                }
         )
         return self.clean_up_json_markdown(response.text)
     
