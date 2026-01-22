@@ -11,10 +11,12 @@ if __name__ == "__main__" and __package__ is None:
     from ai_gym_timetable_extractor.extractor import GymScheduleExtractor
     from ai_gym_timetable_extractor.ocr_engine import GeminiOcrEngine
     from ai_gym_timetable_extractor.aggregator import GymScheduleAggregator
+    from ai_gym_timetable_extractor.database import get_database
 else:
     from .extractor import GymScheduleExtractor
     from .ocr_engine import GeminiOcrEngine
     from .aggregator import GymScheduleAggregator
+    from .database import get_database
 
 IMG_DIR = "data/img"
 JSON_DIR = "data/json"
@@ -52,6 +54,12 @@ def aggregate_results(output_dir: str, aggregated_output: str):
     aggregator.save_aggregated_json(all_classes, aggregated_output)
     print(f"\n✓ Aggregated json saved to: {aggregated_output}")
 
+def load_aggregated_results_to_db(aggregated_json_path: str):
+    """Load aggregated JSON results into the database."""
+    db = get_database()
+    db.load_from_json(aggregated_json_path)
+    print("✓ Loaded aggregated results into database.")
+
 def main():
     """Main CLI entry point."""
     load_dotenv()
@@ -63,7 +71,11 @@ def main():
     # Step 2: Aggregate results
     print("\nStep 2: Aggregating results...")
     aggregate_results(JSON_DIR,  aggregated_output=os.path.join(AGG_JSON_DIR, "aggregated_schedule.json"))
-    
+
+    # Step 3: Load into database
+    print("\nStep 3: Loading aggregated results into database...")
+    aggregated_json_path = os.path.join(AGG_JSON_DIR, "aggregated_schedule.json")
+    load_aggregated_results_to_db(aggregated_json_path)
 
 
 if __name__ == "__main__":
