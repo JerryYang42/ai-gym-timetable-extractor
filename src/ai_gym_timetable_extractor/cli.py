@@ -14,27 +14,32 @@ else:
     from .extractor import GymScheduleExtractor
     from .ocr_engine import GeminiOcrEngine
 
+IMG_DIR = "data"
+OUTPUT_DIR = "temp"
 
-def main():
-    """Main CLI entry point."""
-    # Load environment variables from .env file
-    load_dotenv()
-    
+def batch_image_info_extraction(img_dir: str, output_dir: str):
+    """Batch process all images in the IMG_DIR and save results to OUTPUT_DIR."""
     gemini_ocr_engine = GeminiOcrEngine()
     extractor = GymScheduleExtractor(ocr_engine=gemini_ocr_engine)
     
     # Process images
-    filenames = ["IMG_7191"]
-    for name in filenames:
-        input_path = f"data/{name}.PNG"
-        output_path = f"temp/{name}.json"
-        
-        if not os.path.exists(input_path):
-            print(f"Warning: {input_path} not found, skipping...")
+    for filename in os.listdir(IMG_DIR):
+        if not filename.lower().endswith((".png", ".jpg", ".jpeg")):
             continue
-            
+        
+        input_path = os.path.join(IMG_DIR, filename)
+        output_filename = os.path.splitext(filename)[0] + ".json"
+        output_path = os.path.join(OUTPUT_DIR, output_filename)
+        
         json_result = extractor.extract(input_path)
         extractor.save_to_file(json_result, output_path)
+        print(f"Processed {input_path} -> {output_path}")
+
+def main():
+    """Main CLI entry point."""
+    load_dotenv()
+    batch_image_info_extraction(IMG_DIR, OUTPUT_DIR)
+    
 
 
 if __name__ == "__main__":
