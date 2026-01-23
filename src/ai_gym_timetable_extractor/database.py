@@ -23,17 +23,48 @@ class GymScheduleDatabase:
             cls._instance = super().__new__(cls)
         return cls._instance
     
-    def __init__(self):
-        """Initialize the database (only once due to singleton pattern)."""
+    def __init__(self, db_path: Optional[str | Path] = None):
+        """Initialize the database (only once due to singleton pattern).
+        
+        Args:
+            db_path: Path to the SQLite database file. If None, defaults to data/db/gym_schedule.db
+        """
         if not GymScheduleDatabase._initialized:
             self.conn: Optional[sqlite3.Connection] = None
             self.cursor: Optional[sqlite3.Cursor] = None
+            self.db_path = self._get_db_path(db_path)
             self._create_database()
             GymScheduleDatabase._initialized = True
     
+    def _get_db_path(self, db_path: Optional[str | Path] = None) -> Path:
+        """Get the database file path, creating directories if needed.
+        
+        Args:
+            db_path: Custom database path, or None to use default
+            
+        Returns:
+            Path object for the database file
+        """
+        if db_path is None:
+            # Default to data/db/gym_schedule.db
+            if __name__ == "__main__":
+                # Running as script
+                base_path = Path(__file__).parent.parent.parent
+            else:
+                # Running as module
+                base_path = Path.cwd()
+            db_path = base_path / "data" / "db" / "gym_schedule.db"
+        else:
+            db_path = Path(db_path)
+        
+        # Create directory if it doesn't exist
+        db_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        return db_path
+    
     def _create_database(self):
-        """Create an in-memory SQLite database and set up the schema."""
-        self.conn = sqlite3.connect(':memory:', check_same_thread=False)
+        """Create a SQLite database and set up the schema."""
+        self.conn = sqlite3.connect(str(self.db_path), check_same_thread=False)
         self.conn.row_factory = sqlite3.Row  # Enable dict-like access to rows
         self.cursor = self.conn.cursor()
         
