@@ -79,7 +79,8 @@ class GymScheduleDatabase:
                 venue TEXT NOT NULL,
                 class_type TEXT NOT NULL,
                 vacancy INTEGER NOT NULL,
-                modified_at TEXT NOT NULL
+                modified_at TEXT NOT NULL,
+                UNIQUE(date, timeslot, activity)
             )
         ''')
         
@@ -94,12 +95,14 @@ class GymScheduleDatabase:
     def load_from_json(self, json_path: str | Path) -> int:
         """
         Load gym schedule data from a JSON file into the database.
+        Uses upsert strategy: updates existing records (matched by date, timeslot, activity)
+        or inserts new ones.
         
         Args:
             json_path: Path to the aggregated_schedule.json file
             
         Returns:
-            Number of records loaded
+            Number of records loaded/updated
         """
         json_path = Path(json_path)
         
@@ -112,14 +115,11 @@ class GymScheduleDatabase:
         # Validate and parse using Pydantic model
         schedule = GymSchedule(**data)
         
-        # Clear existing data
-        self.cursor.execute('DELETE FROM gym_classes')
-        
-        # Insert all classes
+        # Upsert all classes (INSERT OR REPLACE)
         records_loaded = 0
         for gym_class in schedule.classes:
             self.cursor.execute('''
-                INSERT INTO gym_classes 
+                INSERT OR REPLACE INTO gym_classes 
                 (date, day_of_week, timeslot, activity, venue, class_type, vacancy, modified_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ''', (
