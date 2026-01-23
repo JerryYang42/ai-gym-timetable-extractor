@@ -1,14 +1,14 @@
 """Web application for uploading gym screenshots from mobile devices."""
 
-import os
 import logging
+import socket
+import subprocess
 from pathlib import Path
 from datetime import datetime
 from typing import List
 
 from fastapi import FastAPI, UploadFile, File, Request
 from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
 
@@ -25,6 +25,50 @@ TEMPLATES_DIR = Path(__file__).parent / "templates"
 TEMPLATES_DIR.mkdir(exist_ok=True)
 
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
+
+def get_local_ip():
+    """Get the local IP address of this machine."""
+    try:
+        # Use ifconfig to get actual network interfaces (works on macOS/Linux)
+        result = subprocess.run(
+            ["ifconfig"], 
+            capture_output=True, 
+            text=True, 
+            timeout=2
+        )
+        
+        # Parse ifconfig output for inet addresses
+        for line in result.stdout.split('\n'):
+            line = line.strip()
+            if line.startswith('inet '):
+                parts = line.split()
+                if len(parts) >= 2:
+                    ip = parts[1]
+                    # Return first 192.168.x.x address found
+                    if ip.startswith('192.168.'):
+                        return ip
+                    # Also accept 10.x.x.x or 172.16-31.x.x if no 192.168 found
+                    if ip.startswith('10.') or ip.startswith('172.'):
+                        # Store as fallback but keep looking for 192.168
+                        if 'fallback_ip' not in locals():
+                            fallback_ip = ip
+        
+        # Use fallback if we found one
+        if 'fallback_ip' in locals():
+            return fallback_ip
+            
+    except Exception:
+        pass
+    
+    # Fallback to socket method
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        local_ip = s.getsockname()[0]
+        s.close()
+        return local_ip
+    except Exception:
+        return "YOUR_LOCAL_IP"
 
 @app.get("/", response_class=HTMLResponse)
 async def upload_page(request: Request):
@@ -99,15 +143,22 @@ def start_server(host: str = "0.0.0.0", port: int = 8000):
         host: Host to bind to (0.0.0.0 for all interfaces)
         port: Port number
     """
-    log.info(f"🚀 Starting Gym Screenshot Upload Server")
-    log.info(f"📱 Open on your iPhone: http://YOUR_LOCAL_IP:{port}")
+    local_ip = get_local_ip()
+    
+    log.info(f"")
+    log.info(f"🚀 Gym Screenshot Upload Server Started!")
+    log.info(f"=" * 60)
+    log.info(f"")
+    log.info(f"📱 Open this URL on your iPhone:")
+    log.info(f"   ➜  http://{local_ip}:{port}")
+    log.info(f"")
     log.info(f"💾 Upload directory: {UPLOAD_DIR.absolute()}")
     log.info(f"")
-    log.info(f"To find your local IP:")
-    log.info(f"  Mac: ifconfig | grep 'inet ' | grep -v 127.0.0.1")
-    log.info(f"  Or: System Preferences → Network")
+    log.info(f"💡 Make sure your iPhone is on the same WiFi network!")
+    log.info(f"")
+    log.info(f"=" * 60)
     
-    uvicorn.run(app, host=host, port=port)
+    uvicorn.run(app, host=host, port=port, log_level="warning")
 
 if __name__ == "__main__":
     start_server()
