@@ -16,11 +16,13 @@ if __name__ == "__main__" and __package__ is None:
     from ai_gym_timetable_extractor.ocr_engine import GeminiOcrEngine
     from ai_gym_timetable_extractor.aggregator import GymScheduleAggregator
     from ai_gym_timetable_extractor.database import get_database
+    from ai_gym_timetable_extractor.web_app import start_server as start_web_server
 else:
     from .extractor import GymScheduleExtractor
     from .ocr_engine import GeminiOcrEngine
     from .aggregator import GymScheduleAggregator
     from .database import get_database
+    from .web_app import start_server as start_web_server
 
 IMG_DIR = "data/img"
 JSON_DIR = "data/json"
@@ -106,11 +108,27 @@ def main():
         '--log-file',
         help='Path to log file (default: gym_extractor.log or LOG_FILE env var)'
     )
+    parser.add_argument(
+        '--web',
+        action='store_true',
+        help='Start web upload server instead of processing images'
+    )
+    parser.add_argument(
+        '--port',
+        type=int,
+        default=8000,
+        help='Port for web server (default: 8000)'
+    )
     
     args = parser.parse_args()
     
     load_dotenv()
     configure_logging(log_level=args.log_level, log_file=args.log_file)
+    
+    # Start web server if --web flag is provided
+    if args.web:
+        start_web_server(port=args.port)
+        return
     
     # Step 1: Batch extract from images
     log.info("Step 1: Extracting schedules from images...")
@@ -118,7 +136,7 @@ def main():
     
     # Step 2: Aggregate results
     log.info("\nStep 2: Aggregating results...")
-    aggregate_results(JSON_DIR,  aggregated_output=os.path.join(AGG_JSON_DIR, "aggregated_schedule.json"))
+    aggregate_results(JSON_DIR, aggregated_output=os.path.join(AGG_JSON_DIR, "aggregated_schedule.json"))
 
     # Step 3: Load into database
     log.info("\nStep 3: Loading aggregated results into database...")
