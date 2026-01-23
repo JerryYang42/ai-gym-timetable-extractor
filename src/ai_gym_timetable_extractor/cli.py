@@ -89,7 +89,7 @@ def aggregate_results(output_dir: str, aggregated_output: str):
 def load_aggregated_results_to_db(aggregated_json_path: str):
     """Load aggregated JSON results into the database."""
     db = get_database()
-    db.load_from_json(aggregated_json_path)
+    db.load_delta_from_json_file(aggregated_json_path)
     log.info("✓ Loaded aggregated results into database.")
 
 def main():

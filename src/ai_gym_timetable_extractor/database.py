@@ -1,7 +1,7 @@
 import sqlite3
 import json
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Union
 from datetime import datetime
 
 if __name__ == "__main__":
@@ -92,32 +92,36 @@ class GymScheduleDatabase:
         
         self.conn.commit()
     
-    def load_from_json(self, json_path: str | Path) -> int:
+    def load_delta(self, source: Union[GymSchedule, List[GymClass]]) -> int:
         """
-        Load gym schedule data from a JSON file into the database.
+        Load gym schedule data into the database from various sources.
         Uses upsert strategy: updates existing records (matched by date, timeslot, activity)
         or inserts new ones.
         
         Args:
-            json_path: Path to the aggregated_schedule.json file
+            source: Can be one of:
+                - GymSchedule: A GymSchedule object with classes
+                - List[GymClass]: A list of GymClass objects
             
         Returns:
             Number of records loaded/updated
         """
-        json_path = Path(json_path)
-        
-        if not json_path.exists():
-            raise FileNotFoundError(f"JSON file not found: {json_path}")
-        
-        with open(json_path, 'r') as f:
-            data = json.load(f)
-        
-        # Validate and parse using Pydantic model
-        schedule = GymSchedule(**data)
+        # Parse the source into a list of GymClass objects
+        if isinstance(source, GymSchedule):
+            # Already a GymSchedule object
+            classes = source.classes
+        elif isinstance(source, list):
+            # Assume it's a list of GymClass objects
+            classes = source
+        else:
+            raise TypeError(
+                f"Invalid source type: {type(source)}. "
+                "Expected GymSchedule or List[GymClass]"
+            )
         
         # Upsert all classes (INSERT OR REPLACE)
         records_loaded = 0
-        for gym_class in schedule.classes:
+        for gym_class in classes:
             self.cursor.execute('''
                 INSERT OR REPLACE INTO gym_classes 
                 (date, day_of_week, timeslot, activity, venue, class_type, vacancy, modified_at)
@@ -136,6 +140,22 @@ class GymScheduleDatabase:
         
         self.conn.commit()
         return records_loaded
+    
+    def load_delta_from_json_file(self, json_path: str | Path) -> int:
+        if isinstance(json_path, (str, Path)):
+            # Load from file
+            json_path = Path(json_path)
+            if not json_path.exists():
+                raise FileNotFoundError(f"JSON file not found: {json_path}")
+            
+            with open(json_path, 'r') as f:
+                data = json.load(f)
+            
+            # Validate and parse using Pydantic model
+            schedule = GymSchedule(**data)
+            classes = schedule.classes
+        
+        return self.load_delta(classes)
     
     def query(self, sql: str, params: tuple = ()) -> List[sqlite3.Row]:
         """
