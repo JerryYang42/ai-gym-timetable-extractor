@@ -1,5 +1,6 @@
 """OCR Engine implementations for extracting text from images."""
 
+import logging
 import os
 import certifi
 import datetime
@@ -14,6 +15,7 @@ from google import genai
 
 from .constants import ENV_GEMINI_API_KEY, ENV_GEMINI_MODEL_NAME
 
+log = logging.getLogger(__name__)
 
 class OcrEngine:
     """Base class for OCR engines."""
@@ -42,7 +44,7 @@ class GeminiOcrEngine(OcrEngine):
         """Extract gym timetable from image using Gemini API."""
         my_file = self.client.files.upload(file=image_path)
 
-        print("Sending OCR request to Gemini API...")
+        log.info("Sending OCR request to Gemini API...")
         today = datetime.date.today().isoformat()
         response = self.client.models.generate_content(
             model=self.model_name,

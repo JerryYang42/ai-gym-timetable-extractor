@@ -1,9 +1,10 @@
-import os
+import logging
 from typing import List
 import json
 from .models import GymSchedule
 from .models import GymClass
 
+log = logging.getLogger(__name__)
 
 class GymScheduleParser:
     def parse(self, filepath: str) -> List[GymClass]:
@@ -35,7 +36,7 @@ class GymScheduleParser:
             #             seen_classes.add(unique_key)
             #             all_classes.append(gym_class)
             #         else:
-            #             print(f"Duplicate found: {gym_class.activity} on {gym_class.date} at {gym_class.timeslot}")
+            #             log.info(f"Duplicate found: {gym_class.activity} on {gym_class.date} at {gym_class.timeslot}")
                         
         except Exception as e:
-            print(f"Error processing {filepath}: {e}")
+            log.error(f"Error processing {filepath}: {e}")

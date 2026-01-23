@@ -1,7 +1,10 @@
+import logging
 from .parser import GymScheduleParser
 from .models import GymClass, GymSchedule
 from typing import List
 import os
+
+log = logging.getLogger(__name__)
 
 class GymScheduleAggregator:
 
@@ -20,7 +23,7 @@ class GymScheduleAggregator:
         all_classes: List[GymClass] = []
         
         if not os.path.exists(directory):
-            print(f"Warning: Directory {directory} does not exist")
+            log.warning(f"Directory {directory} does not exist")
             return all_classes
         
         for filename in sorted(os.listdir(directory)):
@@ -50,4 +53,4 @@ class GymScheduleAggregator:
             # Use model_dump_json for clean JSON output
             f.write(schedule.model_dump_json(indent=2))
         
-        print(f"Saved {len(classes)} classes to {output_path}")
+        log.info(f"Saved {len(classes)} classes to {output_path}")

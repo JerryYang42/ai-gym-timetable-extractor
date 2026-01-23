@@ -1,8 +1,11 @@
 """Main extractor class for gym schedule extraction."""
 
+import logging
 import os
 from typing import Optional
 from .ocr_engine import OcrEngine
+
+log = logging.getLogger(__name__)
 
 
 class GymScheduleExtractor:
@@ -22,4 +25,4 @@ class GymScheduleExtractor:
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(content)
-        print(f"Saved extracted JSON to {output_path}")
+        log.info(f"Saved extracted JSON to {output_path}")
